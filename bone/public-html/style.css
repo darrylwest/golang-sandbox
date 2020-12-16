@@ -1,0 +1,25 @@
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+.msg-black {
+    margin: 0px;
+    color: white;
+    background-color: black;
+    text-align: center;
+}
+
+.line-green {
+    margin: 0px;
+    background-color: blue;
+    height: 2px;
+}
+
+.block {
+    margin: 0px;
+    background-color: red;
+    height: 100px;
+    text-align: center;
+}
+

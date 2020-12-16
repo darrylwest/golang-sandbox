@@ -1,0 +1,4 @@
+
+secure server: https://github.com/Xeoncross/secureserver
+go jira: https://github.com/Netflix-Skunkworks/go-jira
+go zap logger: https://github.com/uber-go/zap

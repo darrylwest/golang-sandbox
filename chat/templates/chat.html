@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>go-chat</title>
+        <style>
+            input { display: block; }
+            ul { list-style: none; }
+        </style>
+    </head>
+    <body>
+        <p>version 00.90.14</p>
+        <ul id="messages"></ul>
+        <form id="chatbox">
+            <textarea></textarea>
+            <input type="submit" value="send"/>
+        </form>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script>
+            console.log("chat> define the socket listener");
+
+            $(function() {
+                var socket = null,
+                    msgBox = $("#chatbox textarea"),
+                    messages = $("#messages");
+
+                console.log("chat> send the message: ", msgBox.val());
+                $("#chatbox").submit(function() {
+                    if (!msgBox.val()) return false;
+                    if (!socket) {
+                        console.log("chat> no sockets here bud...");
+                        return false;
+                    }
+
+                    socket.send(msgBox.val());
+                    msgBox.val("");
+                    return false;
+                });
+
+                if (!window["WebSocket"]) {
+                    console.log("chat> no support on this browser");
+                } else {
+                    console.log("chat> open the socket");
+                    socket = new WebSocket("ws://{{.Host}}/room");
+                    socket.onclose = function() {
+                        console.log("chat> socket closed...")
+                    }
+                    socket.onmessage = function(e) {
+                        console.log('chat> send: ', e.data);
+                        messages.append($("<li>").text(e.data));
+                    }
+                }
+            });
+            console.log("chat> definition complete");
+        </script>
+    </body>
+</html>

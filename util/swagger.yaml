@@ -1,0 +1,992 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: Close5 Chat
+# during dev, should point to your local machine
+host: "localhost:7171"
+#
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+
+paths:
+
+###########################################################
+  # ** Health Check
+###########################################################
+  /conversations/healthcheck109810981098:
+    head:
+      description: Return good health
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+        httpMethod: "HEAD"
+        uri: "https://dylan-staging.close5.com/healthcheck1948337475"
+        type: "http"
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+    options:
+      summary: CORS support
+      description: |
+        Enable CORS by returning correct headers
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - CORS
+      responses:
+        200:
+          description: Default response for CORS method
+          headers:
+            Access-Control-Allow-Headers:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Origin:
+              type: "string"
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: |
+            {
+              "statusCode" : 200
+            }
+        responses:
+          "default":
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Methods : "'https://close5.com'"
+              method.response.header.Access-Control-Allow-Origin : "'https://close5.com'"
+            responseTemplates:
+              application/json: |
+                {}
+
+    get:
+      description: Return good health
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+        httpMethod: "GET"
+        uri: "https://dylan-staging.close5.com/healthcheck1948337475"
+        type: "http"
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+
+  ###########################################################
+    # ** POST message to channel
+    # ** GET conversation
+  ###########################################################
+  /conversations/items/{itemId}/buyers/{buyerId}:
+      parameters:
+          - name: itemId
+            type: string
+            in: path
+            maxLength: 24
+            minLength: 24
+            required: true
+          - name: buyerId
+            type: string
+            in: path
+            maxLength: 24
+            minLength: 24
+            required: true
+      options:
+          summary: CORS support
+          description: |
+            Enable CORS by returning correct headers
+          consumes:
+            - application/json
+          produces:
+            - application/json
+          tags:
+            - CORS
+          responses:
+            200:
+              description: Default response for CORS method
+              headers:
+                Access-Control-Allow-Headers:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Origin:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            type: mock
+            requestTemplates:
+              application/json: |
+                {
+                  "statusCode" : 200
+                }
+            responses:
+              "default":
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Headers : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+                  method.response.header.Access-Control-Allow-Methods : "'https://close5.com'"
+                  method.response.header.Access-Control-Allow-Origin : "'https://close5.com'"
+                responseTemplates:
+                  application/json: |
+                    {}
+
+      post:
+          parameters:
+              - name: body
+                in: body
+                schema:
+                    $ref: "#/definitions/message"
+          responses:
+              200:
+                  description: Success
+                  schema:
+                      $ref: "#/definitions/SuccessResponse"
+      get:
+          description: Returns single conversation
+          responses:
+              200:
+                  description: Success
+                  schema:
+                      $ref: "#/definitions/conversation"
+
+ ###########################################################
+   # ** GET User's conversations
+ ###########################################################
+  /conversations/users/{userId}:
+      parameters:
+          - name: userId
+            type: string
+            in: path
+            maxLength: 24
+            minLength: 24
+            required: true
+          - name: since
+            type: integer
+            in: query
+            default: 0
+      options:
+          summary: CORS support
+          description: |
+            Enable CORS by returning correct headers
+          consumes:
+            - application/json
+          produces:
+            - application/json
+          tags:
+            - CORS
+          responses:
+            200:
+              description: Default response for CORS method
+              headers:
+                Access-Control-Allow-Headers:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Origin:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            type: mock
+            requestTemplates:
+              application/json: |
+                {
+                  "statusCode" : 200
+                }
+            responses:
+              "default":
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Headers : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+                  method.response.header.Access-Control-Allow-Methods : "'https://close5.com'"
+                  method.response.header.Access-Control-Allow-Origin : "'https://close5.com'"
+                responseTemplates:
+                  application/json: |
+                    {}
+
+      get:
+          description: Returns all of user's conversations
+          responses:
+              200:
+                  description: Success
+                  schema:
+                      $ref: "#/definitions/conversations"
+
+###########################################################
+  # ** GET User's conversations that it is Buying
+###########################################################
+  /conversations/users/{userId}/buying:
+      parameters:
+          - name: userId
+            type: string
+            in: path
+            maxLength: 24
+            minLength: 24
+            required: true
+          - name: since
+            type: integer
+            in: query
+            default: 0
+      options:
+          summary: CORS support
+          description: |
+            Enable CORS by returning correct headers
+          consumes:
+            - application/json
+          produces:
+            - application/json
+          tags:
+            - CORS
+          responses:
+            200:
+              description: Default response for CORS method
+              headers:
+                Access-Control-Allow-Headers:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Origin:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            type: mock
+            requestTemplates:
+              application/json: |
+                {
+                  "statusCode" : 200
+                }
+            responses:
+              "default":
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Headers : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+                  method.response.header.Access-Control-Allow-Methods : "'https://close5.com'"
+                  method.response.header.Access-Control-Allow-Origin : "'https://close5.com'"
+                responseTemplates:
+                  application/json: |
+                    {}
+
+      get:
+          description: Returns all of user's conversations for buying
+          responses:
+              200:
+                  description: Success
+                  schema:
+                      $ref: "#/definitions/conversations"
+
+###########################################################
+  # ** GET User's conversations that it is Selling
+###########################################################
+  /conversations/users/{userId}/selling:
+      parameters:
+          - name: userId
+            type: string
+            in: path
+            minLength: 24
+            maxLength: 24
+            required: true
+          - name: since
+            type: integer
+            in: query
+            default: 0
+      options:
+          summary: CORS support
+          description: |
+            Enable CORS by returning correct headers
+          consumes:
+            - application/json
+          produces:
+            - application/json
+          tags:
+            - CORS
+          responses:
+            200:
+              description: Default response for CORS method
+              headers:
+                Access-Control-Allow-Headers:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Origin:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            type: mock
+            requestTemplates:
+              application/json: |
+                {
+                  "statusCode" : 200
+                }
+            responses:
+              "default":
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Headers : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+                  method.response.header.Access-Control-Allow-Methods : "'https://close5.com'"
+                  method.response.header.Access-Control-Allow-Origin : "'https://close5.com'"
+                responseTemplates:
+                  application/json: |
+                    {}
+
+      get:
+          description: Returns all of user's conversations that buying
+          responses:
+              200:
+                  description: Success
+                  schema:
+                      $ref: "#/definitions/conversations"
+
+
+###########################################################
+  # ** GET User's conversations by item
+###########################################################
+  /conversations/items/{itemId}:
+      parameters:
+          - name: itemId
+            type: string
+            in: path
+            maxLength: 24
+            minLength: 24
+            required: true
+          - name: since
+            type: integer
+            in: query
+            default: 0
+      options:
+          summary: CORS support
+          description: |
+            Enable CORS by returning correct headers
+          consumes:
+            - application/json
+          produces:
+            - application/json
+          tags:
+            - CORS
+          responses:
+            200:
+              description: Default response for CORS method
+              headers:
+                Access-Control-Allow-Headers:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Origin:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            type: mock
+            requestTemplates:
+              application/json: |
+                {
+                  "statusCode" : 200
+                }
+            responses:
+              "default":
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Headers : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+                  method.response.header.Access-Control-Allow-Methods : "'https://close5.com'"
+                  method.response.header.Access-Control-Allow-Origin : "'https://close5.com'"
+                responseTemplates:
+                  application/json: |
+                    {}
+
+      get:
+          description: Returns all of user's conversations
+          responses:
+              200:
+                  description: Success
+                  schema:
+                      $ref: "#/definitions/conversations"
+
+
+###########################################################
+# ** Mark item as sold
+###########################################################
+  /conversations/items/{itemId}/sold:
+      parameters:
+          - name: itemId
+            type: string
+            in: path
+            maxLength: 24
+            minLength: 24
+            required: true
+      options:
+          summary: CORS support
+          description: |
+            Enable CORS by returning correct headers
+          consumes:
+            - application/json
+          produces:
+            - application/json
+          tags:
+            - CORS
+          responses:
+            200:
+              description: Default response for CORS method
+              headers:
+                Access-Control-Allow-Headers:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Origin:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            type: mock
+            requestTemplates:
+              application/json: |
+                {
+                  "statusCode" : 200
+                }
+            responses:
+              "default":
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Headers : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+                  method.response.header.Access-Control-Allow-Methods : "'https://close5.com'"
+                  method.response.header.Access-Control-Allow-Origin : "'https://close5.com'"
+                responseTemplates:
+                  application/json: |
+                    {}
+
+      post:
+          parameters:
+            - name: body
+              in: body
+              schema:
+                properties:
+                  buyerId:
+                    type: string
+          responses:
+              200:
+                  description: Success
+                  schema:
+                      $ref: "#/definitions/SuccessResponse"
+
+###########################################################
+# ** Mark item as closed
+###########################################################
+  /conversations/items/{itemId}/closed:
+      parameters:
+          - name: itemId
+            type: string
+            in: path
+            maxLength: 24
+            minLength: 24
+            required: true
+      options:
+          summary: CORS support
+          description: |
+            Enable CORS by returning correct headers
+          consumes:
+            - application/json
+          produces:
+            - application/json
+          tags:
+            - CORS
+          responses:
+            200:
+              description: Default response for CORS method
+              headers:
+                Access-Control-Allow-Headers:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Origin:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            type: mock
+            requestTemplates:
+              application/json: |
+                {
+                  "statusCode" : 200
+                }
+            responses:
+              "default":
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Headers : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+                  method.response.header.Access-Control-Allow-Methods : "'https://close5.com'"
+                  method.response.header.Access-Control-Allow-Origin : "'https://close5.com'"
+                responseTemplates:
+                  application/json: |
+                    {}
+
+      post:
+        description: post request for admins only to close conversations for an item
+
+        responses:
+              200:
+                  description: Success
+                  schema:
+                      $ref: "#/definitions/SuccessResponse"
+
+###########################################################
+  # ** Mark conversations as open
+###########################################################
+  /conversations/mark-opened:
+      options:
+          summary: CORS support
+          description: |
+            Enable CORS by returning correct headers
+          consumes:
+            - application/json
+          produces:
+            - application/json
+          tags:
+            - CORS
+          responses:
+            200:
+              description: Default response for CORS method
+              headers:
+                Access-Control-Allow-Headers:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Origin:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            type: mock
+            requestTemplates:
+              application/json: |
+                {
+                  "statusCode" : 200
+                }
+            responses:
+              "default":
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Headers : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+                  method.response.header.Access-Control-Allow-Methods : "'https://close5.com'"
+                  method.response.header.Access-Control-Allow-Origin : "'https://close5.com'"
+                responseTemplates:
+                  application/json: |
+                    {}
+      post:
+          parameters:
+            - name: body
+              in: body
+              schema:
+                properties:
+                  opened:
+                    type: array
+                    items:
+                        type: object
+
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+            httpMethod: "POST"
+            uri: "https://staging-chat.close5.com/conversations/mark-opened"
+            type: "http"
+          responses:
+              200:
+                  description: Success
+                  schema:
+                      $ref: "#/definitions/SuccessResponse"
+
+###########################################################
+  # ** Mark conversations as hidden
+###########################################################
+  /conversations/hide:
+      options:
+          summary: CORS support
+          description: |
+            Enable CORS by returning correct headers
+          consumes:
+            - application/json
+          produces:
+            - application/json
+          tags:
+            - CORS
+          responses:
+            200:
+              description: Default response for CORS method
+              headers:
+                Access-Control-Allow-Headers:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Origin:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            type: mock
+            requestTemplates:
+              application/json: |
+                {
+                  "statusCode" : 200
+                }
+            responses:
+              "default":
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Headers : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+                  method.response.header.Access-Control-Allow-Methods : "'https://close5.com'"
+                  method.response.header.Access-Control-Allow-Origin : "'https://close5.com'"
+                responseTemplates:
+                  application/json: |
+                    {}
+
+      post:
+          parameters:
+            - name: body
+              in: body
+              schema:
+                properties:
+                  opened:
+                    type: array
+                    items:
+                        type: object
+          responses:
+              200:
+                  description: Success
+                  schema:
+                      $ref: "#/definitions/SuccessResponse"
+
+###########################################################
+  # ** GET Response time
+###########################################################
+  /conversations/users/{userId}/response-time:
+      parameters:
+          - name: userId
+            type: string
+            in: path
+            maxLength: 24
+            minLength: 24
+            required: true
+      options:
+          summary: CORS support
+          description: |
+            Enable CORS by returning correct headers
+          consumes:
+            - application/json
+          produces:
+            - application/json
+          tags:
+            - CORS
+          responses:
+            200:
+              description: Default response for CORS method
+              headers:
+                Access-Control-Allow-Headers:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Origin:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            type: mock
+            requestTemplates:
+              application/json: |
+                {
+                  "statusCode" : 200
+                }
+            responses:
+              "default":
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Headers : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+                  method.response.header.Access-Control-Allow-Methods : "'https://close5.com'"
+                  method.response.header.Access-Control-Allow-Origin : "'https://close5.com'"
+                responseTemplates:
+                  application/json: |
+                    {}
+
+      get:
+          description: Returns string
+          responses:
+              200:
+                  description: String describing user's response behavior
+                  schema:
+                      type: string
+
+###########################################################
+  # ** Clear active channels cache
+###########################################################
+  /conversations/users/{userId}/clear-active:
+      parameters:
+          - name: userId
+            type: string
+            in: path
+            maxLength: 24
+            minLength: 24
+            required: true
+      options:
+          summary: CORS support
+          description: |
+            Enable CORS by returning correct headers
+          consumes:
+            - application/json
+          produces:
+            - application/json
+          tags:
+            - CORS
+          responses:
+            200:
+              description: Default response for CORS method
+              headers:
+                Access-Control-Allow-Headers:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Origin:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            type: mock
+            requestTemplates:
+              application/json: |
+                {
+                  "statusCode" : 200
+                }
+            responses:
+              "default":
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Headers : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+                  method.response.header.Access-Control-Allow-Methods : "'https://close5.com'"
+                  method.response.header.Access-Control-Allow-Origin : "'https://close5.com'"
+                responseTemplates:
+                  application/json: |
+                    {}
+
+      get:
+          description: Clears all of user's active conversations
+          responses:
+              200:
+                  description: Success
+                  schema:
+                      $ref: "#/definitions/SuccessResponse"
+
+  /conversations/auth:
+       get:
+           description: Get pubnub key auth
+           responses:
+               200:
+                   description: Success
+                   schema:
+                       $ref: "#/definitions/pubnub"
+
+###########################################################
+  # ** DELETE Device Blocked
+###########################################################
+  /conversations/udid/{udid}:
+      parameters:
+          - name: udid
+            type: string
+            in: path
+            required: true
+      options:
+          summary: CORS support
+          description: |
+            Enable CORS by returning correct headers
+          consumes:
+            - application/json
+          produces:
+            - application/json
+          tags:
+            - CORS
+          responses:
+            200:
+              description: Default response for CORS method
+              headers:
+                Access-Control-Allow-Headers:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Origin:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            type: mock
+            requestTemplates:
+              application/json: |
+                {
+                  "statusCode" : 200
+                }
+            responses:
+              "default":
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Headers : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+                  method.response.header.Access-Control-Allow-Methods : "'https://close5.com'"
+                  method.response.header.Access-Control-Allow-Origin : "'https://close5.com'"
+                responseTemplates:
+                  application/json: |
+                    {}
+
+      delete:
+          description: Removes device from block list
+          responses:
+              200:
+                  description: Success
+                  schema:
+                      type: string
+
+
+###########################################################
+  # ** GET/POST Devices blocked
+###########################################################
+  /conversations/device-block:
+      parameters:
+          - name: userId
+            type: string
+            in: query
+            maxLength: 24
+            minLength: 24
+          - name: blocked
+            type: boolean
+            in: query
+            default: true
+      options:
+          summary: CORS support
+          description: |
+            Enable CORS by returning correct headers
+          consumes:
+            - application/json
+          produces:
+            - application/json
+          tags:
+            - CORS
+          responses:
+            200:
+              description: Default response for CORS method
+              headers:
+                Access-Control-Allow-Headers:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Origin:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            type: mock
+            requestTemplates:
+              application/json: |
+                {
+                  "statusCode" : 200
+                }
+            responses:
+              "default":
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Headers : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+                  method.response.header.Access-Control-Allow-Methods : "'https://close5.com'"
+                  method.response.header.Access-Control-Allow-Origin : "'https://close5.com'"
+                responseTemplates:
+                  application/json: |
+                    {}
+
+      get:
+          description: Returns all devices blocked
+          responses:
+              200:
+                  description: Success
+                  schema:
+                      $ref: "#/definitions/conversations"
+
+
+      post:
+          parameters:
+            - name: body
+              in: body
+              schema:
+                properties:
+                  devicesBlocked:
+                    type: array
+                    items:
+                        type: string
+          responses:
+              200:
+                  description: Success
+                  schema:
+                      $ref: "#/definitions/SuccessResponse"
+
+
+
+# **************************************************************************
+# **************************************************************************
+
+       # Response definitions
+
+# **************************************************************************
+# **************************************************************************
+
+definitions:
+    SuccessResponse:
+        properties:
+          ok:
+            type: boolean
+
+    conversation:
+        properties:
+            buyerId:
+                type: string
+            sellerId:
+                type: string
+            state:
+                type: string
+            _id:
+                type: string
+            itemId:
+                type: string
+
+    conversations:
+        properties:
+            count:
+                type: integer
+            rows:
+                type: array
+                items:
+                    $ref: "#/definitions/conversation"
+            hasMore:
+                type: boolean
+
+
+    message:
+        properties:
+            message:
+                type: object
+                required: [ createdAt ]
+                properties:
+                    channelId:
+                        type: string
+                        minLength: 24
+                        maxLength: 24
+                    senderId:
+                        type: string
+                        minLength: 24
+                        maxLength: 24
+                    recipientId:
+                        type: string
+                        minLength: 24
+                        maxLength: 24
+                    type:
+                        type: string
+                        enum: ['offer', 'message']
+                    text:
+                        type: string
+                    amount:
+                        type: integer
+                        maximum: 99999
+                        minimum: 0
+                    createdAt:
+                        type: integer
+                        # This is from June 2016, to December 2025 unix: 10e-7
+                        maximum: 1766000000000
+                        minimum: 1466000000000
+
+    pubnub:
+        properties:
+            subscribe_key:
+                type: string
+            cipher_ley:
+                type: string

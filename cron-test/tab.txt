@@ -1,0 +1,18 @@
+#
+# go-cron format
+# minute of hour 0-59, hour of day 0-23, day of month 1-31, month of year 1-12, day of week 0-6 sun-sat
+# * * * * * command to execute > log 2>&1
+# _ _ _ _ _ _
+# | | | | | |
+# | | | | | ----- day of week 0-6
+# | | | | ------- month 1-12
+# | | | --------- day of month 1-31
+# | | ----------- hour of day 0-23
+# | ------------- minute of hour 0-59
+# + ------------- second of minute 0-59
+#
+# second    minute    hour    mday    month   wday    command
+#
+# 
+# show the date once per second
+*   *   *   *   *   *   cron.ShowUTCDateTime()

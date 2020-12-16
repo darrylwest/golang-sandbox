@@ -1,0 +1,19 @@
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: node6-playground
+  labels:
+    app: node6
+    network: ebay-local
+spec:
+  containers:
+    - name: node6-ployground
+      image: mhart/alpine-node:base-6
+      env:
+        - name: NODE_ENV
+          value: production
+      ports:
+        - containerPort: 9000
+restartPolicy: Always

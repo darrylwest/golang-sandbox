@@ -1,0 +1,5 @@
+https://zupzup.org/go-port-forwarding/
+
+doesn't hangup correctly...
+
+simple.go does a copy in/out

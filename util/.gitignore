@@ -1,0 +1,4 @@
+*.out
+bin
+secret-dec.tgz
+gob-user.data

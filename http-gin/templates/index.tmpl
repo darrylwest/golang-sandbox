@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>{{ .title }}</title>
+        <link rel="stylesheet" href="assets/css/style.css">
+    </head>
+    <body>
+        <div id="topheader">
+        top header
+        </div>
+        <div id="topnav">
+        top nav
+        </div>
+        <div id="content">
+        <div id="carousel">
+        carousel
+        </div>
+        <div id="captions">
+        captions
+        </div>
+        </div>
+        <div id="footer">
+        footer
+        </div>
+    </body>
+    <script>
+        var ApplicationFactory = {};
+        ApplicationFactory.bootApplication = function(env) {
+            console.log('env: ', env);
+        };
+
+        window.onload = function() {
+            ApplicationFactory.bootApplication( '{{ .environment }}' );
+        };
+    </script>
+</html>

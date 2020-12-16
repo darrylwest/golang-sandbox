@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+ <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd" >
+ <plist version='1.0'>
+   <dict>
+     <key>Label</key><string>com.rcs.ticker</string>
+     <key>Program</key><string>/Users/dpw/bin/ticker</string>
+     <key>StandardOutPath</key><string>/tmp/com.rcs.ticker.out.log</string>
+     <key>StandardErrorPath</key><string>/tmp/com.rcs.ticker.err.log</string>
+     <key>KeepAlive</key><true/>
+     <key>RunAtLoad</key><true/>
+   </dict>
+</plist>

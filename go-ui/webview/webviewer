@@ -1,0 +1,7 @@
+#!/bin/sh
+# dpw@MacBook-Pro.localdomain
+# 2018.12.24
+#
+
+/usr/local/bin/webview $* >> /tmp/webview.out 2>&1 & 
+

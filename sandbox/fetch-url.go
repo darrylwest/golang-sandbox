@@ -1,0 +1,32 @@
+// fetch prints the content of a URL
+package main
+
+import (
+    "fmt"
+    "io/ioutil"
+    "net/http"
+    "os"
+)
+
+func readUrl(url string) error {
+    resp, err := http.Get(url)
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "fetch: %v\n", err)
+        return err
+    }
+
+    b, err := ioutil.ReadAll(resp.Body)
+    resp.Body.Close()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "fetch reading %s: %v\n", url, err)
+        return err
+    }
+    fmt.Printf("%s", b)
+
+    return nil
+}
+
+func main() {
+    readUrl("http://raincitysoftware.com")
+    readUrl("http://gopl.io")
+}
